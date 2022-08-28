@@ -30,9 +30,35 @@ class FuncionariosController {
             return res.json({
                 status: 200,
                 success: true,
-                msg: "Funcionario gravado com sucesso" 
+                msg: "Funcionario gravado com sucesso"
             })
 
+        } catch (error) {
+            return res.json({
+                status: 400,
+                success: false
+            })
+        }
+    }
+
+
+    deletar(req, res) {
+        try {   
+            const id = req.params.id;
+
+            if (!id) {
+                return res.json({
+                    status: 400,
+                    success: false
+                })
+            }
+
+            db.run("DELETE FROM funcionarios WHERE id = ?", [id], (err, row) => {
+                return res.json({
+                    status: 200,
+                    success: true
+                })
+            })
         } catch (error) {
             return res.json({
                 status: 400,
